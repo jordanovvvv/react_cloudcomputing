@@ -13,22 +13,28 @@ function App() {
     setInputFile(event.target.files[0]);
   };
 
-  const startCalculation = async () => {
+  const startCalculation = async (event) => {
+    event.preventDefault();
     const startTime = performance.now();
     const formData = new FormData();
     formData.append('inputFile', inputFile);
+    console.log(inputFile)
 
     const response = await fetch("http://localhost:3000/sort", {
       method: 'POST',
       body: formData,
-      mode: 'no-cors'
+      mode: 'no-cors',
     });
+
     const data = await response.text();
+    console.log(data);
     setResult(data);
     setProcessingTime(performance.now() - startTime);
+
   };
 
-  const handleDownload = () => {
+  const handleDownload = (event) => {
+    event.preventDefault();
     const file = new Blob([result], {
       type: 'text/plain'
     });
@@ -41,9 +47,9 @@ function App() {
 
   return (
       <div className="App">
-        <input type="file" name="inputFile" onChange={handleFileUpload} />
-        <button onClick={startCalculation}>Start Calculation</button>
-        <button onClick={handleDownload}>Download Result</button>
+        <input type="file" name="inputFile" id="input" onChange={handleFileUpload} />
+        <button className="App-button" onClick={startCalculation}>Start Calculation</button>
+        <button className="App-button" onClick={handleDownload}>Download Result</button>
         <p>Processing Time: {processingTime}ms</p>
       </div>
   );

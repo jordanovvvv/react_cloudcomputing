@@ -1,16 +1,25 @@
 const express = require('express');
 const multer = require('multer');
+const bodyParser = require('body-parser');
+const fs = require('fs');
 const app = express();
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+app.use(bodyParser.text({ type: 'text/plain' }));
+
 app.post('/sort', upload.single('inputFile'), (req, res) => {
+    console.log(req.file)
     const input = req.file.buffer.toString().split('\n').map(Number);
     const result = input.sort((a, b) => b - a);
-    res.setHeader('Content-Type', 'text/plain');
-    res.setHeader('Content-Disposition', 'attachment; filename=result.txt');
-    res.send(result.join('\n'));
+    const resultText = result.join('\n');
+    fs.writeFile('result.txt', resultText, (err) => {
+        if(err) throw err;
+        res.send('File succesfully sorted!');
+    });
+    res.set('Content-Type', 'text/plain');
+    res.send(resultText);
 });
 
 app.listen(3000, () => {
