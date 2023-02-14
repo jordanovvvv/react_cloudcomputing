@@ -22,6 +22,14 @@ app.post('/sort', upload.single('inputFile'), (req, res) => {
     res.send(resultText);
 });
 
+app.get('/sort', (req, res) => {
+    fs.readFile('result.txt', (err, data) => {
+        if(err) throw err;
+        res.set('Content-Type', 'text/plain');
+        res.send(data);
+    });
+});
+
 app.listen(3000, () => {
     console.log('API is listening on port 3000');
 });
