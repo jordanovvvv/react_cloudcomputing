@@ -35,11 +35,6 @@ function App() {
       console.error(error);
     }
 
-    // const data = await response.text();
-    // console.log(data);
-    // setResult(data);
-    // setProcessingTime(performance.now() - startTime);
-
   };
 
   const handleDownload = (event) => {
