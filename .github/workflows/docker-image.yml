@@ -21,7 +21,7 @@ jobs:
       run:
         docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
     - name: Build the Docker image
-      run: docker build . --file Dockerfile -t jordanovvvv/devops_project:$(date +%Y-%m-%d)
+      run: docker build . --file Dockerfile -t jordanovvvv/devops_project:latest
       
     - name: Docker Push
-      run: docker push ${{secrets.DOCKERHUB_USERNAME}}/devops_project:$(date +%Y-%m-%d)
+      run: docker push ${{secrets.DOCKERHUB_USERNAME}}/devops_project:latest
