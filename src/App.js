@@ -20,16 +20,25 @@ function App() {
     formData.append('inputFile', inputFile);
     console.log(inputFile)
 
-    const response = await fetch("http://localhost:3000/sort", {
-      method: 'POST',
-      body: formData,
-      mode: 'no-cors',
-    });
+    try {
+      const response = await fetch("http://localhost:3000/sort", {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors',
+      });
 
-    const data = await response.text();
-    console.log(data);
-    setResult(data);
-    setProcessingTime(performance.now() - startTime);
+      const data = await response.text();
+      console.log(data);
+      setResult(data);
+      setProcessingTime(performance.now() - startTime);
+    } catch (error) {
+      console.error(error);
+    }
+
+    // const data = await response.text();
+    // console.log(data);
+    // setResult(data);
+    // setProcessingTime(performance.now() - startTime);
 
   };
 

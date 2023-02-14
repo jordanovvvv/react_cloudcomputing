@@ -10,7 +10,6 @@ const upload = multer({ storage: storage });
 app.use(bodyParser.text({ type: 'text/plain' }));
 
 app.post('/sort', upload.single('inputFile'), (req, res) => {
-    console.log(req.file)
     const input = req.file.buffer.toString().split('\n').map(Number);
     const result = input.sort((a, b) => b - a);
     const resultText = result.join('\n');
@@ -22,11 +21,11 @@ app.post('/sort', upload.single('inputFile'), (req, res) => {
     res.send(resultText);
 });
 
-app.get('/sort', (req, res) => {
+app.get('/result', (req, res) => {
     fs.readFile('result.txt', (err, data) => {
-        if(err) throw err;
+        if (err) throw err;
         res.set('Content-Type', 'text/plain');
-        res.send(data);
+        res.send(data.toString());
     });
 });
 
