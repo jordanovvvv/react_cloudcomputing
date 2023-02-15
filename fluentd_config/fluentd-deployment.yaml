@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fluentd
+  labels:
+    app: fluentd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fluentd
+  template:
+    metadata:
+      labels:
+        app: fluentd
+    spec:
+      containers:
+        - name: fluentd
+          image: fluentd/fluentd
+          volumeMounts:
+            - name: fluentd-config
+              mountPath: /fluentd/etc/fluent.conf
+              subPath: fluent.conf
+          env:
+            - name: FLUENTD_CONF
+              value: /fluentd/etc/fluent.conf
+          imagePullPolicy: Always
+      volumes:
+        - name: fluentd-config
+          configMap:
+            name: fluentd-config
+      imagePullSecrets:
+        - name: fluentd-secret
