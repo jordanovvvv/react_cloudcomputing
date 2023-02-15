@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: react-app
-          image: dockerized_react:latest
+          image: jordanovvvv/devops_project:latest
           ports:
             - containerPort: 3000
